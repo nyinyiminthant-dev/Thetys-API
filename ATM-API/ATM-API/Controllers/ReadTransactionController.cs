@@ -1,6 +1,7 @@
 ﻿using BAL.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MODEL.ApplicationConfig;
 
 namespace ATM_API.Controllers
 {
@@ -19,12 +20,16 @@ namespace ATM_API.Controllers
         [HttpGet("transaction/{userId}")]
         public async Task<IActionResult> GetTransaction(Guid userId)
         {
-            var result = await _readTransactionService.GetTransactionByUserId(userId);
+            try
+            {
+                var result = await _readTransactionService.GetTransactionByUserId(userId);
 
-            if (!result.IsSuccess)
-                return NotFound("Transaction not found for this user.");
-
-            return Ok(result);
+                return Ok(new ResponseModel { Message = result.Message, Status = APIStatus.Successful,  Data = result.Data });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseModel { Message = ex.Message, Status = APIStatus.SystemError });
+            }
         }
     }
 }

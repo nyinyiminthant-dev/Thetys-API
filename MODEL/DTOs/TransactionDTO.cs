@@ -15,7 +15,7 @@ public class TransactionDTO
     public decimal Amount { get; set; }
 }
 
-public class TransactionResponseDTO 
+public class TransactionResponseDTO : Common
 {
     public Guid TransactionID { get; set; }
     public Guid UserID { get; set; }
@@ -23,8 +23,8 @@ public class TransactionResponseDTO
     public decimal Amount { get; set; }
     public DateTime TransactionDate { get; set; }
 
-
-    public bool IsSuccess { get; set; }
+    public Transaction Data { get; set; }
+   
 
     
 }

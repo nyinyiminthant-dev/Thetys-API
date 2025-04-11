@@ -8,8 +8,7 @@ namespace MODEL.ApplicationConfig;
 
 public class Common
 {
+    public bool IsSuccess { get; set; }
+    public string Message { get; set; }
 
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-    public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-    public bool ActiveFlag { get; set; } = true;
 }

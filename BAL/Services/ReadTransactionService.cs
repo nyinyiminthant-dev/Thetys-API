@@ -33,12 +33,9 @@ internal class ReadTransactionService : IReadTransactionService
             return response;
         }
 
-        response.TransactionID = transaction.TransactionID;
-        response.UserID = transaction.UserID;
-        response.TransactionType = transaction.TransactionType;
-        response.Amount = transaction.Amount;
-        response.TransactionDate = transaction.TransactionDate;
         response.IsSuccess = true;
+        response.Message = "Success";
+        response.Data = transaction;
 
         return response;
     }

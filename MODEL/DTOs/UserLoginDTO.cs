@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MODEL.ApplicationConfig;
+using MODEL.Entities;
 
 namespace MODEL.DTOs;
 
@@ -17,15 +18,20 @@ public class UserLoginDTO
     public string Password { get; set; } = null!;
 }
 
-public class ResponseUserLoginDTO 
+public class ResponseUserLoginDTO : Common
 {
 
     public Guid UserID { get; set; }
     public string UserName { get; set; } = null!;
     public decimal Wallet { get; set; }
     public string Islock { get; set; } = null!;
+ 
 
-    public bool IsSuccess { get; set; } 
+    public User Data { get; set; }
+
+
+
+
 
 }
 

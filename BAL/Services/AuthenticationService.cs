@@ -30,7 +30,7 @@ internal class AuthenticationService : IAuthenticationService
             var userdata = (await _unitOfWork.User.GetByCondition(x => x.UserName == loginDTO.UserName )).FirstOrDefault();
             if (userdata == null)
             {
-               
+                returndata.Message = "User not found";
                 return returndata;
             }
             else
@@ -45,17 +45,17 @@ internal class AuthenticationService : IAuthenticationService
 
                 if (checkpassword)
                 {
-                    returndata.UserID = userdata.UserID;
-                    returndata.UserName = userdata.UserName;
-                   
-                    returndata.Wallet = userdata.Wallet;
+                    returndata.Data = userdata;
+
                     returndata.IsSuccess = true;
+                    returndata.Message = "Success";
 
                 }
                 else
                 {
                     returndata.IsSuccess = false;
-                    
+                    returndata.Message = "Invalid password";
+
                 }
 
                 return returndata;

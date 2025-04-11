@@ -2,6 +2,7 @@
 using BAL.IServices;
 using MODEL.DTOs;
 using System.Threading.Tasks;
+using MODEL.ApplicationConfig;
 
 namespace ATM_API.Controllers
 {
@@ -19,55 +20,45 @@ namespace ATM_API.Controllers
         [HttpPost("withdraw")]
         public async Task<IActionResult> WithDraw([FromBody] WithDrawRequestDTO withDrawRequest)
         {
-            if (withDrawRequest == null)
+            try
             {
-                return BadRequest("Invalid request.");
+                var response = await _userService.WithDraw(withDrawRequest);
+
+                return Ok(new ResponseModel { Message = response.Message, Status = APIStatus.Successful, Data = response });
             }
-
-            var response = await _userService.WithDraw(withDrawRequest);
-
-            if (!response.IsSuccess)
+            catch (Exception ex)
             {
-                return BadRequest(response.Message);
+                return BadRequest(new ResponseModel { Message = ex.Message, Status = APIStatus.SystemError });
             }
-
-            return Ok(response);
         }
 
         [HttpPost("deposit")]
         public async Task<IActionResult> Deposit([FromBody] DepositRequestDTO depositRequest)
         {
-            if (depositRequest == null)
+            try
             {
-                return BadRequest("Invalid request.");
+                var response = await _userService.Deposit(depositRequest);
+
+                return Ok(new ResponseModel { Message = response.Message, Status = APIStatus.Successful, Data = response });
             }
-
-            var response = await _userService.Deposit(depositRequest);
-
-            if (!response.IsSuccess)
+            catch (Exception ex)
             {
-                return BadRequest(response.Message);
+                return BadRequest(new ResponseModel { Message = ex.Message, Status = APIStatus.SystemError });
             }
-
-            return Ok(response);
         }
 
         [HttpPost("checkbalance")]
         public async Task<IActionResult> CheckBalance([FromBody] BalanceRequestDTO balanceRequest)
         {
-            if (balanceRequest == null)
+            try
             {
-                return BadRequest("Invalid request.");
+                var response = await _userService.CheckBalance(balanceRequest);
+                return Ok(new ResponseModel { Message = response.Message, Status = APIStatus.Successful, Data = response });
             }
-
-            var response = await _userService.CheckBalance(balanceRequest);
-
-            if (!response.IsSuccess)
+            catch (Exception ex)
             {
-                return BadRequest(response.Message);
+                return BadRequest(new ResponseModel { Message = ex.Message, Status = APIStatus.SystemError });
             }
-
-            return Ok(response);
         }
     }
 }

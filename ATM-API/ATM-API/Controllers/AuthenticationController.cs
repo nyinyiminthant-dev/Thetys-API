@@ -1,6 +1,7 @@
 ﻿using BAL.IServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MODEL.ApplicationConfig;
 using MODEL.DTOs;
 
 namespace ATM_API.Controllers
@@ -19,15 +20,15 @@ namespace ATM_API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] UserLoginDTO loginDTO)
         {
-            if (!ModelState.IsValid)
-                return BadRequest("Invalid login request.");
-
-            var result = await _authenticationService.LoginWeb(loginDTO);
-
-            if (!result.IsSuccess)
-                return Unauthorized("Username or password is incorrect.");
-
-            return Ok(result);
+            try
+            {
+                var result = await _authenticationService.LoginWeb(loginDTO);
+                return Ok(new ResponseModel { Message = result.Message, Status = APIStatus.Successful, Data = result.Data} );
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new ResponseModel { Message = ex.Message, Status = APIStatus.SystemError});
+            }
         }
     }
 }
