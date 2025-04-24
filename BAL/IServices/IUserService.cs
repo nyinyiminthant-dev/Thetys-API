@@ -14,5 +14,6 @@ public interface IUserService
 
     Task<UserResponseDTO> CheckBalance(BalanceRequestDTO balanceRequest);
 
+    Task<UserResponseDTO> Register(RegisterRequestDTO registerRequest);
 
 }

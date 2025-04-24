@@ -87,5 +87,10 @@ namespace BAL.Services
             response.Balance = user.Wallet;
             return response;
         }
+
+        public Task<UserResponseDTO> Register(RegisterRequestDTO registerRequest)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
