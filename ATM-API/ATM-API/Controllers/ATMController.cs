@@ -1,5 +1,6 @@
 ﻿using System.Net.NetworkInformation;
 using BAL.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MODEL.ApplicationConfig;
@@ -8,6 +9,7 @@ namespace ATM_API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class ATMController : ControllerBase
 {
   private readonly IATMService _atmService;

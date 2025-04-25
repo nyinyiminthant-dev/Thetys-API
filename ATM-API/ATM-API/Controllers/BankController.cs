@@ -1,4 +1,5 @@
 ﻿using BAL.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MODEL.ApplicationConfig;
@@ -8,6 +9,7 @@ namespace ATM_API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+
 public class BankController : ControllerBase
 {
     private readonly IBankService _bankService;
@@ -17,6 +19,8 @@ public class BankController : ControllerBase
         _bankService = bankService;
     }
 
+
+    [Authorize]
     [HttpGet]
 
     public async Task<IActionResult> GetAllUsers()
@@ -32,6 +36,7 @@ public class BankController : ControllerBase
         }
     }
 
+    [Authorize]
     [HttpGet("{id}")]
     public async Task<IActionResult> GetUserById(int id)
     {
@@ -45,6 +50,7 @@ public class BankController : ControllerBase
             return BadRequest(new ResponseModel { Message = ex.Message, Status = APIStatus.SystemError });
         }
     }
+
 
     [HttpPost("Register")]
     public async Task<IActionResult> CreateUser([FromBody] RegisterRequestDTO user)
@@ -60,7 +66,8 @@ public class BankController : ControllerBase
         }
     }
 
-    [HttpPatch("{id}")]
+    [Authorize]
+    [HttpPatch("Update")]
     public async Task<IActionResult> UpdateUser(int id, [FromBody] BankRequestDTO user)
     {
         try
@@ -74,6 +81,8 @@ public class BankController : ControllerBase
         }
     }
 
+
+    [Authorize]
     [HttpPost("CreatePIN")]
     public async Task<IActionResult> CreatePIN(string accountNumber, [FromBody] PINRequestDTO user)
     {
@@ -87,6 +96,7 @@ public class BankController : ControllerBase
             return BadRequest(new ResponseModel { Message = ex.Message, Status = APIStatus.SystemError });
         }
     }
+
 
     [HttpPost("VerifyAccount")]
     public async Task<IActionResult> VerifyAccount(string accountNumber, string OTP)
@@ -102,6 +112,7 @@ public class BankController : ControllerBase
         }
     }
 
+    [Authorize]
     [HttpPost("UnLockRequest")]
     public async Task<IActionResult> UnLockRequest(string accountNumber)
     {

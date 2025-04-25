@@ -26,6 +26,7 @@ namespace BAL.Shared
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IATMService, ATMService>();
             services.AddScoped<IBankService, BankService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
         }
     }
 }

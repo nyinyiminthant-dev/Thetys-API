@@ -1,19 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BAL.Shared
 {
-    public static class CommonAuthentication
+    public class CommonAuthentication
     {
-
-
-        public static bool VerifyPassword(string inputPassword, string actualPassword)
+        public byte[] CreatePasswordHash(string password)
         {
-            return inputPassword == actualPassword;
+            using (var sha512 = SHA256.Create())
+            {
+                return sha512.ComputeHash(Encoding.UTF8.GetBytes(password));
+            }
         }
+
+
+        public bool VerifyPasswordHash(string password, string storedHash)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                var computedHash = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
+                var computedHashBase64 = Convert.ToBase64String(computedHash);
+                return computedHashBase64 == storedHash;
+            }
+        }
+
     }
 }

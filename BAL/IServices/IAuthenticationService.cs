@@ -9,5 +9,5 @@ namespace BAL.IServices;
 
 public interface IAuthenticationService
 {
-   
+    Task<ResponseUserLoginDTO> LoginWeb(UserLoginDTO loginDTO);
 }
