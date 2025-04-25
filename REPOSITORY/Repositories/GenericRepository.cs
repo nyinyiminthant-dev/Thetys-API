@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MODEL;
+using MODEL.Entities;
 
 namespace REPOSITORY.Repositories
 {
@@ -94,6 +95,10 @@ namespace REPOSITORY.Repositories
         }
 
         public async Task<T?> GetById(int id) => await _entities.FindAsync(id);
+      
+
+
+
 
         public async Task<T?> GetByIdAsync(int id)
         {
@@ -207,5 +212,9 @@ namespace REPOSITORY.Repositories
                 throw;
             }
         }
+        public async Task<T?> GetByEmail(string email) =>
+           await _context.Set<T>().FirstOrDefaultAsync(e => EF.Property<string>(e, "Email") == email);
+
+
     }
 }

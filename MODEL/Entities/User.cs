@@ -16,20 +16,17 @@ public class User
     public Guid UserID { get; set; }
 
     public string UserName { get; set; }
-
+    public string AccountNumber { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
-    public decimal Wallet { get; set; }
-
+    public Decimal Wallet { get; set; }
     public string Islock { get; set; }
-
     public DateTime CreateAt { get; set; }
-
     public DateTime UpdateAt { get; set; }
-
     public string? OTP { get; set; }
+    public DateTime OTP_Exp { get; set; }
+    public int PIN { get; set; }
 
-    public DateTime? OTP_Exp { get; set; }
-
+    public string Status { get; set; }
 
 }

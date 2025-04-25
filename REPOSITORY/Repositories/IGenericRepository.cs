@@ -13,6 +13,8 @@ public interface IGenericRepository<T> where T : class
     Task<IEnumerable<T>> GetAllAsyncWithPagination(int page, int pageSize);
     Task<T?> GetById(int id);
     Task<T?> GetByIdAsync(int id);
+    Task<T?> GetByEmail(string email);
+    
     Task Add(T entity);
     Task AddMultiple(IEnumerable<T> entity);
     void Update(T entity);

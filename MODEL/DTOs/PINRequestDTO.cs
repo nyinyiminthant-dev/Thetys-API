@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MODEL.ApplicationConfig;
 
 namespace MODEL.DTOs;
 
-public class UserResponseDTO : Common
+public class PINRequestDTO
 {
-  
-    public decimal Balance { get; set; }
-    
+    public int PIN { get; set; }
 }
