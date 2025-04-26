@@ -60,6 +60,24 @@ namespace BAL.Services
 
             };
 
+            if (user.Wallet is 0)
+            {
+                model.IsSuccess = false;
+                model.Message = "Please add the Wallet";
+                model.Data = null;
+                
+                return model;
+            }
+
+            if (user.Wallet < 10000)
+            {
+                model.IsSuccess = false;
+                model.Message = "Please add at least over 10000";
+                model.Data = null;
+
+                return model;
+            }
+
             await _unitOfWork.User.Add(user);
             var result = await _unitOfWork.SaveChangesAsync();
 
