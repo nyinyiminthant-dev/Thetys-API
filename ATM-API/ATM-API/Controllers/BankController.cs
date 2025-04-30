@@ -82,7 +82,7 @@ public class BankController : ControllerBase
     }
 
 
-    [Authorize]
+
     [HttpPost("CreatePIN")]
     public async Task<IActionResult> CreatePIN(string accountNumber, [FromBody] PINRequestDTO user)
     {

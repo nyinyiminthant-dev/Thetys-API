@@ -47,7 +47,7 @@ namespace BAL.Services
 
                     returndata.AccountNumber = userdata.AccountNumber;
                     returndata.PasswordStatus = true;
-
+                    returndata.Balance = userdata.Wallet;
                     return returndata;
                 }
                 else

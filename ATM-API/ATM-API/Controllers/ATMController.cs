@@ -19,8 +19,23 @@ public class ATMController : ControllerBase
         _atmService = atmService;
     }
 
+
+    [HttpGet("GetAll")]
+    public async Task<IActionResult> GetAll(string AccountNumber)
+    {
+        try
+        {
+            var response = await _atmService.GetAllTransactions( AccountNumber);
+            return Ok(new ResponseModel { Message = response.Message, Status = APIStatus.Successful, Data = response.Data });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new ResponseModel { Message = ex.Message, Status = APIStatus.SystemError });
+        }
+    }
+
     [HttpPost("Deposit")]
-    public async Task<IActionResult> Deposit(string AccountNumber, int pin, decimal amount)
+    public async Task<IActionResult> Deposit([FromQuery] string AccountNumber,[FromQuery] int pin,[FromQuery] decimal amount)
     {
         try
         {
@@ -79,6 +94,20 @@ public class ATMController : ControllerBase
         try
         {
             var response = await _atmService.ValidatePin(pin);
+            return Ok(new ResponseModel { Message = response.Message, Status = APIStatus.Successful, Data = response.Data });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new ResponseModel { Message = ex.Message, Status = APIStatus.SystemError });
+        }
+    }
+
+    [HttpPost("ChangePIn")]
+    public async Task<IActionResult> ChangePin(string AccountNumber, int pin, int newPin)
+    {
+        try
+        {
+            var response = await _atmService.ChangePIN( AccountNumber, pin, newPin);
             return Ok(new ResponseModel { Message = response.Message, Status = APIStatus.Successful, Data = response.Data });
         }
         catch (Exception ex)

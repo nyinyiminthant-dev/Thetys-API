@@ -83,7 +83,7 @@ namespace BAL.Services
 
             if (result > 0)
             {
-                bool emailSent = SendOTPEmail(user.Email, user.UserName, otpCode);
+                bool emailSent = SendOTPEmail(user.Email, user.UserName, otpCode,accountNuber);
                 if (!emailSent)
                 {
                     model.IsSuccess = false;
@@ -127,7 +127,7 @@ namespace BAL.Services
             return random.Next(10000000, 99999999).ToString();
         }   
 
-        private static bool SendOTPEmail(string toEmail, string userName, string otpCode)
+        private static bool SendOTPEmail(string toEmail, string userName, string otpCode, string accountnumber)
         {
             try
             {
@@ -144,6 +144,7 @@ namespace BAL.Services
                 <p style='font-size: 16px; color: #333;'>Your One-Time Password (OTP) for verification is:</p>
                 <p style='font-size: 24px; font-weight: bold; color: #28a745; text-align: center; padding: 10px; border: 2px dashed #28a745; display: inline-block;'>{otpCode}</p>
                 <p style='font-size: 14px; color: #ff0000; text-align: center;'>This OTP will expire in 5 minutes.</p>
+                <p style='font-size: 14px; color: #ff0000; text-align: center;'>Your account name is {accountnumber}</p>
                
                 <br>
                 <p style='font-size: 14px; color: #666; text-align: center;'>Best regards,</p>
@@ -168,11 +169,7 @@ namespace BAL.Services
                 return false;
             }
         }
-
-
-
-
-
+        
 
         public async Task<BankListResponseDTO> GetAllUsers()
         {
@@ -395,6 +392,8 @@ namespace BAL.Services
 
                 return model;
             }
+
+        
 
             if (user.PIN != 0)
             {

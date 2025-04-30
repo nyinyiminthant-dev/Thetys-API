@@ -14,6 +14,8 @@ namespace MODEL.DTOs
 
         public bool AccountStatus { get; set; }
         public string? Token { get; set; }
+        
+        public decimal Balance { get; set; }
         public bool PasswordStatus { get; set; }
     }
 }

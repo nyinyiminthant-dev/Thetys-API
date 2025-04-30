@@ -16,5 +16,7 @@ namespace BAL.IServices
         Task<ATMResponseDTO> Deposit(string AccountNumber,int pin, decimal amount);
         Task<ATMResponseDTO> CheckBalance(string AccountNumber);
         Task<ATMResponseDTO> Transfer(string fromAccountNumber, string toAccountNumber, decimal amount, int pin);
+        
+        Task<BankResponseDTO> ChangePIN(string AccountNumber, int pin, int newPin);
     }
 }

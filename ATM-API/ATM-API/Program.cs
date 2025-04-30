@@ -17,7 +17,6 @@ builder.Services.AddControllers();
 builder.Configuration.GetSection("AppSettings").Bind(appSettings);
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 ServiceManager.SetServiceInfo(builder.Services, appSettings);
-builder.Services.AddControllers();
 builder.Services.AddScoped<CommonAuthentication>();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -36,6 +35,18 @@ builder.Services.AddSwaggerGen(options =>
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyCorsPolicy", policy =>
+    {
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
+builder.Services.AddControllers();
 
 
 builder.Services.AddAuthentication(options =>
@@ -75,6 +86,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
+app.UseCors("MyCorsPolicy");
 app.MapControllers();
 
 app.Run();
