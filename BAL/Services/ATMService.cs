@@ -234,12 +234,12 @@ public class ATMService : IATMService
         SendMailForPinChange(user.Email, user.UserName, user.AccountNumber);
             
         model.IsSuccess = true;
-        model.Message = "PIN changed successfully";
+        model.Message = "PIN changed successfully";    
         model.Data = user;
             
         return model;
     }
-
+    
     public async Task<ATMResponseDTO> ValidatePin(int pin)
     {
         var response = new ATMResponseDTO();
