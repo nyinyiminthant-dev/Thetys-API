@@ -188,7 +188,8 @@ public class ATMService : IATMService
                 
                 
         };
-           
+
+       
             
         await _unitOfWork.transaction.Add(atm);
         await _unitOfWork.SaveChangesAsync();
@@ -278,6 +279,26 @@ public class ATMService : IATMService
 
         var transactions = _unitOfWork.transaction.GetByExp(t => t.AccountNumber == AccountNumber || t.FromAccount == AccountNumber || t.ToAccount == AccountNumber).ToList();
 
+        foreach (var tx in transactions)
+        {
+            if (tx.ToAccount == user.AccountNumber)
+            {
+                tx.TransactionType = "Received";
+            }
+            else if (tx.FromAccount == user.AccountNumber)
+            {
+                tx.TransactionType = "Transfer";
+            }
+            else
+            {
+             
+            }
+
+            _unitOfWork.transaction.Update(tx);
+        }
+        await _unitOfWork.SaveChangesAsync();
+
+        
         response.Message = "Transactions retrieved";
         response.IsSuccess = true;
         response.Data = transactions.ToList();
