@@ -128,4 +128,18 @@ public class BankController : ControllerBase
     }
 
 
+    [HttpPost ("ResendOTP")]
+    public async Task<IActionResult> ResendOTP(string accountNumber)
+    {
+        try
+        {
+             var response = await _bankService.ResendOTP(accountNumber);
+             return Ok(new ResponseModel { Message = response.Message, Status = APIStatus.Successful, Data = response.Data });
+        }
+        catch (Exception e)
+        {
+            return BadRequest(new ResponseModel { Message = e.Message, Status = APIStatus.SystemError });
+        }
+    }
+
 }

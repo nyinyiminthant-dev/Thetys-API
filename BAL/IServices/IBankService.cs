@@ -17,5 +17,7 @@ public interface IBankService
 
    Task<BankResponseDTO> CreatePIN(string accountNumber, PINRequestDTO requestDTO);
    Task<BankResponseDTO> VerifyAccount(string accountNumber, string OTP);
+   
+   Task<BankResponseDTO> ResendOTP(string accountNumber);
 
 }

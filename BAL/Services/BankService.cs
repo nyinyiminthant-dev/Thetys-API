@@ -144,7 +144,7 @@ namespace BAL.Services
                 <p style='font-size: 16px; color: #333;'>Your One-Time Password (OTP) for verification is:</p>
                 <p style='font-size: 24px; font-weight: bold; color: #28a745; text-align: center; padding: 10px; border: 2px dashed #28a745; display: inline-block;'>{otpCode}</p>
                 <p style='font-size: 14px; color: #ff0000; text-align: center;'>This OTP will expire in 5 minutes.</p>
-                <p style='font-size: 14px; color: #ff0000; text-align: center;'>Your account name is {accountnumber}</p>
+                <p style='font-size: 24px; font-weight: bold; color: #28a745; text-align: center; padding: 10px; border: 2px dashed #28a745; display: inline-block;'>Your account number is {accountnumber}</p>
                
                 <br>
                 <p style='font-size: 14px; color: #666; text-align: center;'>Best regards,</p>
@@ -374,6 +374,79 @@ namespace BAL.Services
             model.Message = message;
             model.Data = user;
 
+            return model;
+        }
+
+        public async Task<BankResponseDTO> ResendOTP(string accountNumber)
+        {
+            BankResponseDTO model = new BankResponseDTO();  
+            var user = (_unitOfWork.User.GetByExp(x => x.AccountNumber == accountNumber)).FirstOrDefault();
+            
+            if (user == null)
+            {
+                model.IsSuccess = false;
+                model.Message = "User not found.";
+                model.Data = null;  
+                
+                return model; 
+            }
+            
+            if (user.OTP_Exp > DateTime.Now)
+            {
+                model.IsSuccess = false;
+                model.Message = "OTP already sent.";
+                model.Data = null;  
+                
+                return model; 
+            }
+            
+            if (user.Status == "Y")
+            {
+                model.IsSuccess = false;
+                model.Message = "Account already verified.";
+            }
+            
+            if (user.Islock == "Y")
+            {
+                model.IsSuccess = false;
+                model.Message = "Account is locked.";
+                model.Data = null;  
+                
+                return model; 
+            }
+
+            var newOtp = GenerateOTP();
+            user.OTP = newOtp;
+            user.OTP_Exp = DateTime.Now.AddMinutes(5);
+            user.UpdateAt = DateTime.Now;
+            
+            _unitOfWork.User.Update(user);
+            var result = await _unitOfWork.SaveChangesAsync();
+            string message = result > 0 ? "OTP resent successfully." : "OTP resent failed.";
+            
+            if (result > 0)
+            {
+                bool emailSent = SendOTPEmail( user.Email,user.UserName, newOtp,   user.AccountNumber);
+
+                if (!emailSent)
+                {
+                    model.IsSuccess = false;
+                    model.Message = "Failed to send OTP email.";
+                    model.Data = user;
+                    return model;
+                }
+
+                model.IsSuccess = true;
+                model.Message = "OTP has been resent to your email.";
+                model.Data = user;
+            }
+            else
+            {
+                model.IsSuccess = false;
+                model.Message = "Failed to update OTP.";
+                model.Data = user;
+            }
+            
             return model;
         }
 
