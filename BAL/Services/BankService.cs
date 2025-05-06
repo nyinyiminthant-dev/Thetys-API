@@ -150,7 +150,7 @@ namespace BAL.Services
                 <p style='font-size: 14px; color: #666; text-align: center;'>Best regards,</p>
                 <p style='font-size: 14px; color: #666; text-align: center;'><strong>TravelAgency Team</strong></p>
             </div>";
-
+      
                 mail.Body = htmlBody;
                 mail.IsBodyHtml = true;
 
