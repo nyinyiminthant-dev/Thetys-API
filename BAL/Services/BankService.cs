@@ -132,7 +132,7 @@ namespace BAL.Services
             try
             {
                 MailMessage mail = new MailMessage();
-                mail.From = new MailAddress("nnyi37389@gmail.com");
+                mail.From = new MailAddress("nnyi37389@gmail.com", "ATM System");
                 mail.To.Add(toEmail);
                 mail.Subject = "Your OTP Code from RetailManagement System";
 
@@ -148,7 +148,7 @@ namespace BAL.Services
                
                 <br>
                 <p style='font-size: 14px; color: #666; text-align: center;'>Best regards,</p>
-                <p style='font-size: 14px; color: #666; text-align: center;'><strong>TravelAgency Team</strong></p>
+                <p style='font-size: 14px; color: #666; text-align: center;'><strong>ATM System </strong></p>
             </div>";
       
                 mail.Body = htmlBody;
