@@ -157,7 +157,7 @@ namespace BAL.Services
                 SmtpClient smtpClient = new SmtpClient("smtp.gmail.com")
                 {
                     Port = 587,
-                    Credentials = new NetworkCredential("nnyi37389@gmail.com", "jbrq aqmv ukix sfdv"),
+                    Credentials = new NetworkCredential("nnyi37389@gmail.com", "tdtu ueuz llrz kdnr"),
                     EnableSsl = true
                 };
 
